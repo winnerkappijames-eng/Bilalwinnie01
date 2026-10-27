@@ -1,0 +1,349 @@
+C<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#061c25">
+  <meta name="description" content="The official personal website of Winner.">
+  <title>Winner | Official Website</title>
+
+  <style>
+    :root {
+      --deep: #04151c;
+      --deep-blue: #062b38;
+      --sea-green: #0b625e;
+      --aqua: #83e4d2;
+      --white: #e9f7f5;
+      --muted: #b6d3d0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--white);
+      background: var(--deep);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.65;
+    }
+
+    /* Animated underwater environment */
+    .ocean {
+      position: fixed;
+      inset: 0;
+      z-index: -4;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          ellipse at 50% -12%,
+          rgba(75, 185, 168, .24),
+          transparent 42%
+        ),
+        radial-gradient(
+          ellipse at 80% 35%,
+          rgba(12, 101, 103, .22),
+          transparent 40%
+        ),
+        linear-gradient(
+          180deg,
+          #092c38 0%,
+          #06232e 40%,
+          #041820 75%,
+          #020c12 100%
+        );
+    }
+
+    .light-rays {
+      position: absolute;
+      inset: -35% -20% 20%;
+      opacity: .22;
+      background: repeating-conic-gradient(
+        from 235deg at 50% 0%,
+        transparent 0deg 7deg,
+        rgba(151, 255, 233, .15) 8deg 10deg,
+        transparent 11deg 18deg
+      );
+      filter: blur(15px);
+      transform-origin: top center;
+      animation: rays 22s ease-in-out infinite alternate;
+    }
+
+    .water-glow {
+      position: absolute;
+      width: 55vw;
+      height: 55vw;
+      max-width: 700px;
+      max-height: 700px;
+      left: 22%;
+      top: 15%;
+      border-radius: 50%;
+      background: rgba(26, 143, 128, .09);
+      filter: blur(65px);
+      animation: glowDrift 18s ease-in-out infinite alternate;
+    }
+
+    .sea-floor {
+      position: absolute;
+      left: -10%;
+      bottom: -8%;
+      width: 120%;
+      height: 24%;
+      border-radius: 50% 50% 0 0 / 28% 28% 0 0;
+      background: linear-gradient(
+        180deg,
+        rgba(14, 69, 65, .6),
+        rgba(3, 23, 28, .95)
+      );
+      box-shadow: 0 -20px 80px rgba(25, 137, 119, .08);
+    }
+
+    .sea-floor::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 20%;
+      height: 2px;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(102, 212, 185, .15),
+        transparent
+      );
+    }
+
+    /* Navigation */
+    nav {
+      width: min(1100px, 92%);
+      margin: 0 auto;
+      padding: 22px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .brand {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 850;
+      letter-spacing: .08em;
+      font-size: 1.05rem;
+    }
+
+    .brand span {
+      color: var(--aqua);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #d9efed;
+      text-decoration: none;
+      font-size: .92rem;
+      transition: color .25s, transform .25s;
+    }
+
+    .nav-links a:hover {
+      color: var(--aqua);
+      transform: translateY(-2px);
+    }
+
+    /* Main welcome section */
+    .hero {
+      width: min(1000px, 90%);
+      min-height: 76vh;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      padding: 55px 0 85px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-content {
+      max-width: 720px;
+      animation: riseIn 1.2s ease both;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: #b9e9e1;
+      border: 1px solid rgba(131, 228, 210, .28);
+      background: rgba(4, 30, 38, .48);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: .82rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      margin: 23px 0 15px;
+      font-size: clamp(3.3rem, 10vw, 7rem);
+      line-height: .99;
+      letter-spacing: -.065em;
+      text-shadow: 0 8px 40px rgba(0, 0, 0, .4);
+    }
+
+    h1 span {
+      display: block;
+      color: #b7f0e5;
+      text-shadow: 0 0 32px rgba(102, 231, 204, .2);
+    }
+
+    .hero p {
+      max-width: 590px;
+      color: #d2e8e6;
+      font-size: clamp(1rem, 2.4vw, 1.18rem);
+      margin-bottom: 28px;
+    }
+
+    /* Buttons */
+    .actions,
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+    }
+
+    .button {
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 48px;
+      padding: 12px 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(155, 237, 221, .45);
+      color: #032128;
+      background: linear-gradient(135deg, #c9f8ee, #78cdbb);
+      font-weight: 750;
+      text-decoration: none;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, .2);
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+
+    .button.secondary {
+      color: var(--white);
+      background: rgba(7, 43, 51, .56);
+      backdrop-filter: blur(8px);
+    }
+
+    .button:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 34px rgba(55, 211, 181, .17);
+    }
+
+    .button:active {
+      transform: scale(.97);
+    }
+
+    /* Information sections */
+    main {
+      width: min(1000px, 90%);
+      margin: 0 auto 70px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .panel {
+      margin: 22px 0;
+      padding: clamp(24px, 5vw, 42px);
+      border: 1px solid rgba(146, 224, 212, .17);
+      border-radius: 25px;
+      background: linear-gradient(
+        135deg,
+        rgba(4, 27, 35, .83),
+        rgba(13, 75, 72, .24)
+      );
+      box-shadow:
+        0 18px 55px rgba(0, 0, 0, .2),
+        inset 0 1px 0 rgba(255, 255, 255, .035);
+      backdrop-filter: blur(14px);
+    }
+
+    .panel h2 {
+      font-size: clamp(1.5rem, 4vw, 2.15rem);
+      margin-bottom: 12px;
+    }
+
+    .panel p {
+      color: #c4ddda;
+    }
+
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .profile-item {
+      padding: 15px 17px;
+      border-radius: 15px;
+      background: rgba(126, 223, 204, .055);
+      border: 1px solid rgba(146, 224, 212, .1);
+    }
+
+    .profile-item strong {
+      display: block;
+      color: #92ddcf;
+      font-size: .83rem;
+      margin-bottom: 4px;
+    }
+
+    .profile-item span {
+      overflow-wrap: anywhere;
+    }
+
+    .socials {
+      margin-top: 18px;
+    }
+
+    footer {
+      text-align: center;
+      color: rgba(213, 239, 235, .62);
+      padding: 12px 20px 32px;
+      font-size: .9rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Swimming fish */
+    .fish {
+      position: absolute;
+      width: 62px;
+      height: 28px;
+      opacity: .42;
+      filter: drop-shadow(0 0 9px rgba(95, 224, 199, .12));
+      animation: swim linear infinite;
+      pointer-events: none;
+    }
+
+    .fish::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 5px;
+      width: 43px;
+      height: 20px;
+      border-radius: 60% 45% 45% 60%;
+      background: linear-gradient(
+        90deg,
+        rgba(120, 218, 201,
